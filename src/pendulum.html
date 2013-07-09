@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<object id="logo" data="logo.svg" type="image/svg+xml" width="1024" height="1024">
+
+<script type="text/javascript">
+var animator;
+var angle1 = 0;
+var angle2 = 0;
+var angle3 = 0;
+var posx = 513;
+var posy = 515;
+
+document.getElementById("logo").addEventListener("load", function()
+{
+    if (animator != null)
+    {
+        // Just stop
+        clearInterval(animator);
+        animator = null;
+        return;
+    }
+
+    var svgTag = document.getElementById("logo");
+    var svgDoc = null;
+    try
+    {
+        // Most modern browsers understand this
+        svgDoc = svgTag.getSVGDocument();
+    }
+    catch (ex) {} // Ignore error
+    if (svgDoc == undefined)
+    {
+        svgDoc = svgTag.contentDocument; // For old Mozilla?
+        if (svgDoc == undefined)
+        {
+           alert("Cannot get SVG document");
+           return;
+       }
+    }
+
+    var C1 = svgDoc.getElementById("C1");
+    var C2 = svgDoc.getElementById("C2");
+    var C3 = svgDoc.getElementById("C3");
+
+    animator = setInterval(
+        function ()
+        {
+            angle1 += 5;
+            angle2 -= 8;
+            angle3 += 10;
+
+            C1.setAttribute("transform", "rotate(" + angle1 + " " + posx + " " + posy + ")");
+            C2.setAttribute("transform", "rotate(" + angle2 + " " + posx + " " + posy + ")");
+            C3.setAttribute("transform", "rotate(" + angle3 + " " + posx + " " + posy + ")");
+        }, 50);
+});
+        </script>
+
+   </body>
+</html>
